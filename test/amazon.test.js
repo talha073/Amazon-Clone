@@ -5,4 +5,11 @@ const token = (n) => {
   return ethers.utils.parseUnits(n.toString(), "ether");
 };
 
-describe("Amazon", () => {});
+describe("Amazon", () => {
+  it("Has a name", async () => {
+    const amazon = await ethers.getContractFactory("Amazon");
+    const amazonContract = await amazon.deploy();
+    const name = await amazonContract.name();
+    expect(name).to.equal("Amazon");
+  });
+});
