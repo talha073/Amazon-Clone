@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 contract Amazon {
     string public name;
-    address owner;
+    address public owner;
     
     constructor(){
         name = "Amazon";
