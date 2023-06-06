@@ -21,4 +21,18 @@ describe("Amazon", () => {
       expect(await amazon.owner()).to.equal(deployer.address);
     });
   });
+
+  describe("Listing", () => {
+    let transaction;
+    beforeEach(async () => {
+      transaction = await amazon
+        .connect(deployer)
+        .list(1, "Shoes", "Clothing", "IMAGE", 1, 4, 5);
+      await transaction.wait();
+    });
+    it("Return item attributes", async () => {
+      const item = await amazon.items(1);
+      expect(item.id).to.equal(1);
+    });
+  });
 });
