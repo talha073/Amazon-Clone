@@ -52,4 +52,20 @@ describe("Amazon", () => {
       expect(transaction).to.emit(amazon, "List");
     });
   });
+  describe("Buying", () => {
+    let transaction;
+
+    beforeEach(async () => {
+      transaction = await amazon
+        .connect(deployer)
+        .list(ID, NAME, CATEGORY, IMAGE, COST, RATING, STOCK);
+      await transaction.wait();
+
+      transaction = await amazon.connect(buyer).buy(ID, { value: COST });
+    });
+    it("update the contract balance", async () => {
+      const result = await ethers.provider.getBalance(amazon.address);
+      expect(result).to.equal(COST);
+    });
+  });
 });
