@@ -48,5 +48,8 @@ describe("Amazon", () => {
       expect(item.rating).to.equal(RATING);
       expect(item.stock).to.equal(STOCK);
     });
+    it("emits list event", async () => {
+      expect(transaction).to.emit(amazon, "List");
+    });
   });
 });
