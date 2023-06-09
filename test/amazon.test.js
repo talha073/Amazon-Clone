@@ -63,6 +63,20 @@ describe("Amazon", () => {
 
       transaction = await amazon.connect(buyer).buy(ID, { value: COST });
     });
+    it("update buyer's order count", async () => {
+      const result = await amazon.orderCount(buyer.address);
+      expect(result).to.equal(1);
+    });
+    it("Add's the order", async () => {
+      const order = await amazon.orders(buyer.address, 1);
+      expect(order.time).to.be.greaterThan(0);
+      expect(order.item.name).to.be.equal(NAME);
+      expect(order.item.category).to.be.equal(CATEGORY);
+    });
+    it("Should revert tx if the order id is not correct or 0", async () => {
+      const order = await amazon.orders(buyer.address, 2);
+      expect(order).to.be.revertedWith("out of stock");
+    });
     it("update the contract balance", async () => {
       const result = await ethers.provider.getBalance(amazon.address);
       expect(result).to.equal(COST);
