@@ -39,6 +39,7 @@ contract Amazon {
     }
     function buy(uint256 _id) public payable {
         require(items[_id].stock > 0, "out of stock");
+        require(msg.value == items[_id].cost, "not enough money");
         Item memory item = items[_id];  //fetch items
         Order memory order = Order(block.timestamp, item);  //crearte order
         //add order for user
