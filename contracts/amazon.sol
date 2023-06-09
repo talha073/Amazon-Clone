@@ -38,9 +38,13 @@ contract Amazon {
         emit List(_name, _cost, _stock); 
     }
     function buy(uint256 _id) public payable {
-        Item memory item = items[_id];
-        Order memory order = Order(block.timestamp, item);
+        require(items[_id].stock > 0, "out of stock");
+        Item memory item = items[_id];  //fetch items
+        Order memory order = Order(block.timestamp, item);  //crearte order
+        //add order for user
         orderCount[msg.sender] += 1;
+        orders[msg.sender][orderCount[msg.sender]] = order;
+        items[_id].stock = item.stock - 1;   //subtract from stock
         
     } 
 }
