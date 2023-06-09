@@ -22,6 +22,7 @@ contract Amazon {
     mapping (address => mapping(uint256 => Order)) public orders;  //userAddress => qty of Product =>  Order
 
     event List(string name, uint256 cost, uint256 quantity);
+    event Buy(address buyer, uint256 itemId, uint256 orderId);
     
     modifier onlyOwner() {
         require(msg.sender == owner, "not owner");
@@ -46,6 +47,7 @@ contract Amazon {
         orderCount[msg.sender] += 1;
         orders[msg.sender][orderCount[msg.sender]] = order;
         items[_id].stock = item.stock - 1;   //subtract from stock
+        emit Buy(msg.sender, orderCount[msg.sender], item.id);
         
     } 
 }
