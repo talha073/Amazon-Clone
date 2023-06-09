@@ -18,6 +18,8 @@ contract Amazon {
         Item item;  
     }
     mapping (uint256 => Item) public items;
+    mapping (address => uint256) public orderCount;
+    mapping (address => mapping(uint256 => Order)) public orders;  //userAddress => qty of Product =>  Order
 
     event List(string name, uint256 cost, uint256 quantity);
     
@@ -37,7 +39,8 @@ contract Amazon {
     }
     function buy(uint256 _id) public payable {
         Item memory item = items[_id];
-        Order memory order = Order(block.timestamp, item)
+        Order memory order = Order(block.timestamp, item);
+        orderCount[msg.sender] += 1;
         
     } 
 }
