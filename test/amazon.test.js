@@ -81,5 +81,8 @@ describe("Amazon", () => {
       const result = await ethers.provider.getBalance(amazon.address);
       expect(result).to.equal(COST);
     });
+    it("Emit buy event", async () => {
+      expect(transaction).to.emit(amazon, "Buy");
+    });
   });
 });
