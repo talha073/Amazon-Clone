@@ -85,4 +85,27 @@ describe("Amazon", () => {
       expect(transaction).to.emit(amazon, "Buy");
     });
   });
+
+  describe("Withdraw", () => {
+    let beforeBalance;
+
+    beforeEach(async () => {
+      let transaction = await amazon
+        .connect(deployer)
+        .list(ID, NAME, CATEGORY, IMAGE, COST, RATING, STOCK);
+      await transaction.wait();
+      transaction = await amazon.connect(buyer).buy(ID, { value: COST });
+      beforeBalance = await ethers.provider.getBalance(deployer.address);
+      transaction = await amazon.connect(deployer).withdraw();
+      await transaction.wait();
+    });
+    it("update the owner balance", async () => {
+      const balanceAfter = await ethers.provider.getBalance(deployer.address);
+      expect(balanceAfter).to.greaterThan(beforeBalance);
+    });
+    it("update the contract balance", async () => {
+      const balanceAfter = await ethers.provider.getBalance(amazon.address);
+      expect(balanceAfter).to.equal(0);
+    });
+  });
 });
