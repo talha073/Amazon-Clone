@@ -24,9 +24,40 @@ module.exports = {
       accounts: [process.env.PRIVATE_KEY],
       chainId: 5,
     },
+    goerli: {
+      url: process.env.GOERLI_URL || "",
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 5,
+    },
+    mumbai: {
+      url: process.env.MUMBAI_URL || "",
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 80001,
+    },
+    arbitrumGoerli: {
+      url: "https://goerli-rollup.arbitrum.io/rpc",
+      chainId: 421613,
+      accounts: [process.env.PRIVATE_KEY],
+    },
+    arbitrumOne: {
+      url: "https://arb1.arbitrum.io/rpc",
+      accounts: [process.env.PRIVATE_KEY],
+    },
   },
   solidity: "0.8.3",
   etherscan: {
-    apiKey: {},
+    apiKey: {
+      mainnet: process.env.ETHERSCAN_API_KEY,
+      goerli: process.env.ETHERSCAN_API_KEY,
+      rinkeby: process.env.ETHERSCAN_API_KEY,
+      ropsten: process.env.ETHERSCAN_API_KEY,
+      polygon: process.env.MATIC_API_KEY,
+      polygonMumbai: process.env.MATIC_API_KEY,
+      bsc: process.env.BSCSCAN_API_KEY,
+      bscTestnet: process.env.BSCSCAN_API_KEY,
+      ftmTestnet: process.env.FTMSCAN_API_KEY,
+      arbitrumOne: process.env.ARBISCAN_KEY,
+      sepolia: process.env.ETHERSCAN_API_KEY,
+    },
   },
 };
